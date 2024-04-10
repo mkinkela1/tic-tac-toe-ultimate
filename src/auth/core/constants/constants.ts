@@ -1,0 +1,1 @@
+export const JWT_TOKEN_SERVICE = "JWT_TOKEN_SERVICE";
