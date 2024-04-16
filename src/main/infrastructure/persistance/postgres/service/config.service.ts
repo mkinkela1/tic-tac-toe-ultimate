@@ -20,6 +20,22 @@ class ConfigService {
     return mode != "development";
   }
 
+  public getJwtAccessTokenSecret() {
+    return this.getValue("JWT_ACCESS_TOKEN_SECRET", true);
+  }
+
+  public getJwtAccessTokenExpiresIn() {
+    return this.getValue("JWT_ACCESS_TOKEN_EXPIRES_IN", true);
+  }
+
+  public getJwtRefreshTokenSecret() {
+    return this.getValue("JWT_REFRESH_TOKEN_SECRET", true);
+  }
+
+  public getJwtRefreshTokenExpiresIn() {
+    return this.getValue("JWT_REFRESH_TOKEN_EXPIRES_IN", true);
+  }
+
   public getTypeOrmConfig(): DataSourceOptions {
     return {
       type: "postgres",

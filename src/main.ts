@@ -10,6 +10,8 @@ async function bootstrap() {
     type: VersioningType.URI,
   });
 
+  app.enableCors({ origin: "*" });
+
   const config = new DocumentBuilder()
     .setTitle("Cats example")
     .setDescription("The cats API description")

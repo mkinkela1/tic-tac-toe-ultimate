@@ -2,8 +2,11 @@ import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { LocalAuthController } from "src/auth-local/application/controllers/local-auth.controller";
+import { LoginService } from "src/auth-local/core/services/login.service";
 import { RegistrationService } from "src/auth-local/core/services/registration.service";
 import { BcryptModule } from "src/auth-local/infrastructure/bcrypt/bcrypt.module";
+import { LocalStrategy } from "src/auth-local/infrastructure/passport/local.strategy";
+import { AuthTokenService } from "src/auth/core/services/auth-token.service";
 import { JwtTokenModule } from "src/auth/infrastructure/jwt/jwt.module";
 import { PostgresModule } from "src/main/infrastructure/persistance/postgres/modules/postgres.module";
 import { PgUserPersistence } from "src/user/infrastructure/persistance/pg-user.persistence";
@@ -23,6 +26,9 @@ import { PgUserPersistence } from "src/user/infrastructure/persistance/pg-user.p
     BcryptModule,
     JwtModule,
     RegistrationService,
+    LoginService,
+    AuthTokenService,
+    LocalStrategy,
   ],
 })
 export class AuthLocalModule {}

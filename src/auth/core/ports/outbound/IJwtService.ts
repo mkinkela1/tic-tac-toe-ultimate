@@ -3,7 +3,7 @@ export interface IJwtServicePayload {
   email: string;
 }
 
-export interface IJwtAdapter {
+export interface IJwtService {
   checkToken(token: string, secret: string): Promise<IJwtServicePayload>;
   createToken(
     payload: IJwtServicePayload,
