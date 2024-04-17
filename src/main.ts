@@ -1,7 +1,9 @@
 import { VersioningType } from "@nestjs/common/enums/version-type.enum";
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import { AppModule } from "./app.module";
+import * as cookieParser from "cookie-parser";
+import { AppModule } from "src/app.module";
+import { REFRESH_TOKEN_COOKIE_NAME } from "src/auth-local/core/constants/constants";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,12 +13,20 @@ async function bootstrap() {
   });
 
   app.enableCors({ origin: "*" });
+  app.use(cookieParser());
 
   const config = new DocumentBuilder()
-    .setTitle("Cats example")
-    .setDescription("The cats API description")
+    .setTitle("Tic Tac Toe API")
     .setVersion("1.0")
-    .addTag("cats")
+    .addCookieAuth(
+      "auth-cookie",
+      {
+        type: "http",
+        in: "Header",
+        scheme: "Bearer",
+      },
+      REFRESH_TOKEN_COOKIE_NAME,
+    )
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("api", app, document);

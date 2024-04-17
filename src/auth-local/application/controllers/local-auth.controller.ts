@@ -1,5 +1,5 @@
 import { Controller, UseGuards } from "@nestjs/common";
-import { Body, Post, Request } from "@nestjs/common/decorators/http";
+import { Body, Post, Request, Res } from "@nestjs/common/decorators/http";
 import {
   ApiBadRequestResponse,
   ApiBody,
@@ -9,9 +9,11 @@ import {
   ApiNotFoundResponse,
   ApiTags,
 } from "@nestjs/swagger";
+import { Response } from "express";
 import { DtoLoginRequest } from "src/auth-local/application/dtos/dto-login.request";
 import { DtoRegistrationRequest } from "src/auth-local/application/dtos/dto-registration.request";
 import { DtoRegistrationResponse } from "src/auth-local/application/dtos/dto-registration.response";
+import { REFRESH_TOKEN_COOKIE_NAME } from "src/auth-local/core/constants/constants";
 import { LoginService } from "src/auth-local/core/services/login.service";
 import { RegistrationService } from "src/auth-local/core/services/registration.service";
 import { LocalAuthGuard } from "src/auth-local/infrastructure/passport/local.guard";
@@ -35,8 +37,17 @@ export class LocalAuthController {
   async login(
     @Body() _: DtoLoginRequest,
     @Request() req: Request,
+    @Res() res: Response,
   ): Promise<DtoLoginResponse> {
-    return await this.loginService.login(req.user);
+    const { user, accessToken, refreshToken } = await this.loginService.login(
+      req.user,
+    );
+
+    res.cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken, {
+      httpOnly: true,
+    });
+
+    return res.json({ user, accessToken }) as unknown as DtoLoginResponse;
   }
 
   @ApiExtraModels(DtoRegistrationRequest)
