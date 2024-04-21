@@ -23,4 +23,13 @@ jobs:
       - name: Run tests
         uses: borales/actions-yarn@v4
         with:
-          cmd: test
+          cmd: test:cov
+
+      - name: Check coverage
+        run: |
+          coverage=$(awk 'END { print $NF }' coverage/coverage-summary.json | cut -d. -f1)
+          echo "Test coverage: $coverage%"
+          if [ $coverage -lt 50 ]; then
+            echo "Test coverage is less than 50%: $coverage%"
+            exit 1
+          fi

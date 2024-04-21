@@ -3,14 +3,17 @@ import { JwtService } from "@nestjs/jwt";
 import {
   IJwtService,
   IJwtServicePayload,
+  IJwtTokenResponse,
 } from "src/auth/core/ports/outbound/IJwtService";
 
 @Injectable()
 export class JwtTokenService implements IJwtService {
   constructor(private readonly jwtService: JwtService) {}
 
-  async checkToken(token: string, secret: string): Promise<IJwtServicePayload> {
-    return await this.jwtService.verifyAsync(token, { secret });
+  async checkToken(token: string, secret: string): Promise<IJwtTokenResponse> {
+    return await this.jwtService.verifyAsync(token, {
+      secret,
+    });
   }
 
   async createToken(

@@ -22,7 +22,7 @@ export class LoginService implements ILoginService {
   async login(
     user: User,
   ): Promise<{ accessToken: string; refreshToken: string; user: User }> {
-    const payload = { id: user.id, email: user.email };
+    const payload = { sub: user.id };
 
     const { accessToken, refreshToken } =
       await this.authTokenService.generateAuthTokens(payload);

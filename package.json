@@ -30,8 +30,10 @@
     "@nestjs/jwt": "^10.2.0",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/platform-socket.io": "^10.3.8",
     "@nestjs/swagger": "^7.3.0",
     "@nestjs/typeorm": "^10.0.2",
+    "@nestjs/websockets": "^10.3.8",
     "bcrypt": "^5.1.1",
     "class-validator": "^0.14.1",
     "cookie-parser": "^1.4.6",
@@ -82,7 +84,7 @@
     "collectCoverageFrom": [
       "**/*.ts"
     ],
-    "coverageDirectory": "../coverage",
+    "coverageDirectory": "coverage",
     "testEnvironment": "node",
     "coveragePathIgnorePatterns": [
       "dist",

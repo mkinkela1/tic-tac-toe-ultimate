@@ -18,6 +18,7 @@ import { LoginService } from "src/auth-local/core/services/login.service";
 import { RegistrationService } from "src/auth-local/core/services/registration.service";
 import { LocalAuthGuard } from "src/auth-local/infrastructure/passport/local.guard";
 import { DtoLoginResponse } from "src/auth/application/dtos/dto-login.response";
+import { configService } from "src/main/infrastructure/persistance/postgres/service/config.service";
 
 @ApiTags("Auth")
 @Controller({ path: "auth", version: "1" })
@@ -45,6 +46,7 @@ export class LocalAuthController {
 
     res.cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken, {
       httpOnly: true,
+      secure: configService.isProduction(),
     });
 
     return res.json({ user, accessToken }) as unknown as DtoLoginResponse;
