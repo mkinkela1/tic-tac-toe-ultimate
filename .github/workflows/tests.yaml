@@ -27,8 +27,8 @@ jobs:
 
       - name: Check coverage
         run: |
-          coverage=$(awk 'END { print $NF }' ./coverage/coverage-final.json | cut -d. -f1)
-          echo "Test coverage: $coverage%"
+          coverage=$(jq '.total[].pct' < ./coverage/coverage-summary.json | awk '{s+=$1} END {print (s/4)}')
+          echo "Test coverage: $coverage %"
           if [ $coverage -lt 50 ]; then
             echo "Test coverage is less than 50%"
             exit 1
