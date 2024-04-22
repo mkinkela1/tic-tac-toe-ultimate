@@ -3,7 +3,7 @@ import { DataSourceOptions } from "typeorm/data-source/DataSourceOptions";
 
 config();
 
-class ConfigService {
+export class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) {}
 
   public ensureValues(keys: string[]) {
