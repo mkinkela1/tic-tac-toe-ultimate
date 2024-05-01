@@ -2,6 +2,7 @@ import { Inject } from "@nestjs/common/decorators/core/inject.decorator";
 import { Injectable } from "@nestjs/common/decorators/core/injectable.decorator";
 import { ConflictException } from "@nestjs/common/exceptions/conflict.exception";
 import { InternalServerErrorException } from "@nestjs/common/exceptions/internal-server-error.exception";
+import "reflect-metadata";
 import {
   BCRYPT_SERVICE,
   CUSTOM_LOCAL_AUTH_REPOSITORY,
