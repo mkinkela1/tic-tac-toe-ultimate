@@ -1,5 +1,6 @@
 import { Controller, UseGuards } from "@nestjs/common";
 import { Body, Post, Request, Res } from "@nestjs/common/decorators/http";
+import { ConfigService } from "@nestjs/config";
 import {
   ApiBadRequestResponse,
   ApiBody,
@@ -18,7 +19,6 @@ import { LoginService } from "src/auth-local/core/services/login.service";
 import { RegistrationService } from "src/auth-local/core/services/registration.service";
 import { LocalAuthGuard } from "src/auth-local/infrastructure/passport/local.guard";
 import { DtoLoginResponse } from "src/auth/application/dtos/dto-login.response";
-import { configService } from "src/main/infrastructure/persistance/postgres/service/config.service";
 
 @ApiTags("Auth")
 @Controller({ path: "auth", version: "1" })
@@ -26,6 +26,7 @@ export class LocalAuthController {
   constructor(
     private readonly registrationService: RegistrationService,
     private readonly loginService: LoginService,
+    private readonly configService: ConfigService,
   ) {}
 
   @ApiExtraModels(DtoLoginRequest)
@@ -46,7 +47,7 @@ export class LocalAuthController {
 
     res.cookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken, {
       httpOnly: true,
-      secure: configService.isProduction(),
+      secure: this.configService.get<string>("mode") === "production",
     });
 
     return res.json({ user, accessToken }) as unknown as DtoLoginResponse;

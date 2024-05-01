@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { LocalAuthController } from "src/auth-local/application/controllers/local-auth.controller";
@@ -17,6 +18,7 @@ import { PgUserPersistence } from "src/user/infrastructure/persistance/pg-user.p
     PostgresModule,
     BcryptModule,
     JwtTokenModule,
+    ConfigModule,
   ],
   controllers: [LocalAuthController],
   exports: [],

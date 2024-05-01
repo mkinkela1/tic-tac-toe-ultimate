@@ -1,3 +1,4 @@
+import { ConfigModule } from "@nestjs/config";
 import { Test } from "@nestjs/testing/test";
 import { TestingModule } from "@nestjs/testing/testing-module";
 import { JWT_TOKEN_SERVICE } from "src/auth/core/constants/constants";
@@ -6,15 +7,23 @@ import {
   IJwtServicePayload,
 } from "src/auth/core/ports/outbound/IJwtService";
 import { AuthTokenService } from "src/auth/core/services/auth-token.service";
-import { ConfigService } from "src/main/infrastructure/persistance/postgres/service/config.service";
 
 describe("AuthTokenService", () => {
   let authTokenService: AuthTokenService;
   let jwtService: IJwtService;
-  let configService: ConfigService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        ConfigModule.forFeature(async () => ({
+          jwt: {
+            accessTokenSecret: "access-secret",
+            accessTokenExpiresIn: "15m",
+            refreshTokenSecret: "refresh-secret",
+            refreshTokenExpiresIn: "7d",
+          },
+        })),
+      ],
       providers: [
         AuthTokenService,
         {
@@ -28,12 +37,6 @@ describe("AuthTokenService", () => {
 
     authTokenService = module.get<AuthTokenService>(AuthTokenService);
     jwtService = module.get<IJwtService>(JWT_TOKEN_SERVICE);
-    configService = new ConfigService({
-      JWT_ACCESS_TOKEN_SECRET: "secret",
-      JWT_ACCESS_TOKEN_EXPIRES_IN: "1h",
-      JWT_REFRESH_TOKEN_EXPIRES_IN: "1d",
-      JWT_REFRESH_TOKEN_SECRET: "secret",
-    });
   });
 
   it("should be defined", () => {

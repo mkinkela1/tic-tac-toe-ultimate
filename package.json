@@ -2,7 +2,7 @@
   "name": "tic-tac-toe-ultimate",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Matteo Kinkela",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -39,7 +39,7 @@
     "cookie-parser": "^1.4.6",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
-    "pg": "^8.11.3",
+    "pg": "^8.11.5",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.20"

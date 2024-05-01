@@ -23,9 +23,6 @@ export class PgUser extends BaseGlobalEntity {
   @Column({ type: "text", nullable: true, name: "last_name" })
   lastName: string;
 
-  @Column({ type: "date", nullable: true, name: "deleted_at" })
-  deletedAt: Date;
-
   @Column({ type: "text", nullable: true, name: "avatar_url" })
   avatarUrl: string;
 
